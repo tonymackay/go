@@ -5,6 +5,7 @@
 package crypto
 
 import (
+	"bytes"
 	"crypto/md5"
 	"encoding/hex"
 	"io"
@@ -20,6 +21,17 @@ func HashFileMD5(filePath string) (string, error) {
 	defer file.Close()
 	hash := md5.New()
 	if _, err := io.Copy(hash, file); err != nil {
+		return "", err
+	}
+	b := hash.Sum(nil)[:16]
+	return hex.EncodeToString(b), nil
+}
+
+// HashStringMD5 returns the MD5 hash of a given string
+func HashStringMD5(s string) (string, error) {
+	r := bytes.NewReader([]byte(s))
+	hash := md5.New()
+	if _, err := io.Copy(hash, r); err != nil {
 		return "", err
 	}
 	b := hash.Sum(nil)[:16]

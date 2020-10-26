@@ -13,3 +13,11 @@ func TestHashFileMD5(t *testing.T) {
 		t.Fatalf("want: %v got: %v, err: %v", want, got, err)
 	}
 }
+
+func TestHashStringMD5(t *testing.T) {
+	want := "5eb63bbbe01eeed093cb22bb8f5acdc3"
+	got, err := HashStringMD5("hello world")
+	if err != nil || want != got {
+		t.Fatalf("want: %v got: %v, err: %v", want, got, err)
+	}
+}
